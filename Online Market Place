@@ -1,0 +1,89 @@
+class Product:
+    def __init__(self, name, description, price, category, image):
+        self.name = name
+        self.description = description
+        self.price = price
+        self.category = category
+        self.image = image
+        self.reviews = []
+        self.ratings = []
+    def add_review(self, review, rating):
+        self.reviews.append(review)
+        self.ratings.append(rating)
+        print(f"Review added for {self.name}")
+    def average_rating(self):
+        if len(self.ratings) == 0:
+            return 0
+        return sum(self.ratings) / len(self.ratings)
+    def display_product(self):
+        print(f"Product: {self.name}")
+        print(f"Description: {self.description}")
+        print(f"Price: ${self.price:.2f}")
+        print(f"Category: {self.category}")
+        print(f"Image: {self.image}")
+        print(f"Average Rating: {self.average_rating():.1f}")
+        print("\nReviews:")
+        for review in self.reviews:
+            print(f"- {review}")
+class Seller:
+    def __init__(self, name):
+        self.name = name
+        self.storefront = []
+    def add_product(self, product):
+        self.storefront.append(product)
+        print(f"{product.name} added to {self.name}'s storefront.")
+    def display_storefront(self):
+        print(f"\n{self.name}'s Storefront:")
+        for product in self.storefront:
+            product.display_product()
+class Marketplace:
+    def __init__(self):
+        self.sellers = []
+        self.products = []
+    def register_seller(self, seller):
+        self.sellers.append(seller)
+        print(f"Seller {seller.name} registered.")
+    def add_product(self, seller, product):
+        self.products.append(product)
+        seller.add_product(product)
+    def search_products(self, search_term):
+        results = [product for product in self.products if search_term.lower() in product.name.lower()]
+        if results:
+            print(f"\nSearch Results for '{search_term}':")
+            for product in results:
+                product.display_product()
+        else:
+            print(f"No products found for '{search_term}'.")
+    def filter_products(self, category=None, max_price=None):
+        results = self.products
+        if category:
+            results = [product for product in results if product.category.lower() == category.lower()]
+        if max_price:
+            results = [product for product in results if product.price <= max_price]
+        if results:
+            print("\nFiltered Products:")
+            for product in results:
+                product.display_product()
+        else:
+            print("No products found with the specified criteria.")
+def main():
+    marketplace = Marketplace()
+    seller1 = Seller("John's Electronics")
+    seller2 = Seller("Alice's Bookstore")
+    marketplace.register_seller(seller1)
+    marketplace.register_seller(seller2)
+    product1 = Product("Laptop", "A high-performance laptop", 999.99, "Electronics", "laptop.jpg")
+    product2 = Product("Smartphone", "A new smartphone with great features", 699.99, "Electronics", "smartphone.jpg")
+    product3 = Product("Python Programming Book", "Learn Python programming", 29.99, "Books", "python_book.jpg")
+    marketplace.add_product(seller1, product1)
+    marketplace.add_product(seller1, product2)
+    marketplace.add_product(seller2, product3)
+    marketplace.search_products("laptop")
+    marketplace.filter_products(category="Electronics", max_price=800)
+    product1.add_review("Great laptop, fast performance!", 5)
+    product1.add_review("Battery life could be better", 4)
+    product2.add_review("Excellent smartphone!", 5)
+    product1.display_product()
+    seller1.display_storefront()
+if __name__ == "__main__":
+    main()
