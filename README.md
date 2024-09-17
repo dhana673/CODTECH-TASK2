@@ -1,4 +1,4 @@
-![Screenshot (52)](https://github.com/user-attachments/assets/ff200c45-688d-4873-bc59-02a2a10d3641)Name : RENTALA DHANUSH
+Name : RENTALA DHANUSH
 
 Company : CODTECH IT SOLUTIONS
 
